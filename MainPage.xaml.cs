@@ -1,25 +1,34 @@
-﻿namespace OpenGTINScanner
+﻿using ZXing.Net.Maui.Controls;
+using ZXing.Net.Maui;
+using OpenGTINScanner.Helpers;
+using System.Net;
+
+namespace OpenGTINScanner
 {
     public partial class MainPage : ContentPage
     {
-        int count = 0;
-
+        string code_found = null;
+        
         public MainPage()
         {
             InitializeComponent();
+
+            cameraBarcodeReaderView.Options = new BarcodeReaderOptions
+            {
+                Formats = BarcodeFormats.All,
+                AutoRotate = true,
+                Multiple = false
+            };
         }
 
-        private void OnCounterClicked(object sender, EventArgs e)
+        // if - barcode detected => update label
+        protected void BarcodesDetected(object sender, BarcodeDetectionEventArgs e)
         {
-            count++;
+            code_found = e.Results[0].Value.ToString();
+            Dispatcher.Dispatch(() => BarcodeLabel.Text = $"Folgender Code wurde erkannt: {code_found}");
 
-            if (count == 1)
-                CounterBtn.Text = $"Clicked {count} time";
-            else
-                CounterBtn.Text = $"Clicked {count} times";
-
-            SemanticScreenReader.Announce(CounterBtn.Text);
+            // Anfrage senden
+            OpenGTINHelper.SendHttpRequest(code_found);
         }
     }
-
 }
