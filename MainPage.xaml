@@ -13,8 +13,10 @@
               x:Name="cameraBarcodeReaderView"
               BarcodesDetected="BarcodesDetected" />
 
-            <Label x:Name="BarcodeLabel">Hier werden Barcodes angezeigt!</Label> 
-        
+            <Label x:Name="BarcodeLabel">Hier werden Barcodes angezeigt!</Label>
+            <Label x:Name="KategorieLabel">Hier wird die Produktkategorie angezeigt:</Label>
+            <Label x:Name="BezeichnungLabel">Hier wird die Produktbezeichnung angezeigt:</Label>
+
         </VerticalStackLayout>
     </ScrollView>
 

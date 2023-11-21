@@ -8,7 +8,7 @@ namespace OpenGTINScanner.Helpers
 {
     internal class OpenGTINHelper
     {
-        public static async void SendHttpRequest(string ean)
+        public static async Task<string> SendHttpRequest(string ean)
         {
             try
             {
@@ -22,12 +22,16 @@ namespace OpenGTINScanner.Helpers
                     HttpResponseMessage response = await client.GetAsync(url);
 
                     string result = await response.Content.ReadAsStringAsync();
+
+                    return result;
                 }
             }
             catch (Exception ex)
             {
                 // Hier kannst du mit Ausnahmen umgehen, die während des HTTP-Requests auftreten können
                 Console.WriteLine($"Fehler: {ex.Message}");
+
+                return null;
             }
         }
     }
